@@ -1,7 +1,7 @@
 from food_recommendation import app,db
 from flask import render_template,request,redirect,url_for,flash
 from food_recommendation.model import User
-
+# print
 @app.route("/home")
 @app.route("/")
 def home():
