@@ -15,18 +15,21 @@ def login():
 def signup():
     print(request.method)
     if request.method == 'POST':
-        name = request.form['name']
+        fullname = request.form['fullname']
         email = request.form['email']
         city =request.form['city']
         password = request.form['password']
-        print(city,password)
+        mood = request.form['mood']
+        preference = request.form['preference']
+        type = request.form['type']
+        print(fullname,email,city,password,mood,preference,type)
 
-        if not name:
-            flash('Your Full Name is required!')
-        elif not email:
-            flash('email is required!')
-        elif not password:
-            flash('Password is required')
+        # if not name:
+        #     flash('Your Full Name is required!')
+        # elif not email:
+        #     flash('email is required!')
+        # elif not password:
+        #     flash('Password is required')
             
     return redirect(url_for('home'))
 
