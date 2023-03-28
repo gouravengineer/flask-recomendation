@@ -14,7 +14,7 @@
         box-sizing: border-box;
       }
       #container-div {
-        background-image: url('/food_recommendation/static/Image/food_3.jpg');
+        background-image: url('/static/Image/food_3.jpg');
         height: 100%;
         filter: blur(3px);
         -webkit-filter: blur(3px);
@@ -85,7 +85,6 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>{{ url_for('signup')}} lls</h1>
     <div class="bg-[#EEEEEE]" id="container-div"></div>
     <form
       action="/signup"
@@ -94,8 +93,8 @@
       onsubmit="set_localStorage_Value()"
     >
       {% if error %}
-      <p class="text-red-500 font-bold">Error</p>
-      {{% endif %}}
+      <p class="text-red-500 font-bold">{{ error }}</p>
+      {% endif %}
       <div class="form-group">
         <label for="fullname">Full Name:</label>
         <input type="text" id="fullname" name="fullname" required />
@@ -122,16 +121,15 @@
         />
       </div>
       <input class="hidden" name="mood" id="mood" />
-      <input class="hidden" name="preference" id="preference" />
-      <input class="hidden" name="type" id="type" />
+      <!-- <input class="hidden" name="preference" id="preference" />
+      <input class="hidden" name="type" id="type" /> -->
 
       <input type="submit" value="Submit" />
     </form>
     <script>
       function set_localStorage_Value() {
         document.getElementById('mood').value = localStorage.getItem('mood');
-        document.getElementById('preference').value =
-          localStorage.getItem('preference');
+        document.getElementById('preference').value = localStorage.getItem('preference');
         document.getElementById('type').value = localStorage.getItem('type');
         return true;
       }

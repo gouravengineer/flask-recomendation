@@ -1,4 +1,5 @@
 from food_recommendation import app,db
+import json
 from flask import render_template,request,redirect,url_for,flash
 from food_recommendation.model import User
 from flask_bcrypt import Bcrypt
@@ -8,6 +9,11 @@ bcrypt=Bcrypt()
 @app.route("/")
 def home():
     return render_template('home.html')
+
+def get_total_food():
+    with open('food_recommendation/total_food.json') as f:
+        food_data = json.load(f)
+    return food_data
 
 @app.route("/login", methods=('GET', 'POST'))
 def login():
@@ -34,6 +40,7 @@ def login():
 def signup():
     print(request.method)
     if request.method == 'POST':
+        error=None
         fullname = request.form['fullname']
         email = request.form['email']
         city =request.form['city']
@@ -47,16 +54,16 @@ def signup():
             check = User.query.filter_by(email=email).all()
             print(check)
             if len(check)!=0:
-                flash("User already Existed")
-                # return redirect(url_for('sig'))
+                error="User already exists"
+                return render_template('signup.html',error=error,total_food=get_total_food())
             
             user = User(name=fullname,email=email,password=hashed_password,city=city)
             db.session.add(user)
             db.session.commit()
             user=User.query.all()
-            print(user)
-            
-    return redirect(url_for('home'))
+            print(user)    
+        return redirect(url_for('home'))
+    return render_template('signup.html',total_food=get_total_food())
 
     
 
