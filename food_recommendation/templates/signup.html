@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -60,7 +61,8 @@
         border-radius: 12px;
       }
 
-      input[type='submit'] {
+      /* input[type='submit'] { */
+      #submit-btn {
         background-color: #4caf50;
         border: none;
         color: white;
@@ -75,63 +77,256 @@
         right: 0;
       }
 
-      input[type='submit']:hover {
+      .submit-btn:hover {
         background-color: white;
         color: #45a049;
         border: 2px solid #4caf50;
       }
+      .btn-link {
+        border: none;
+        outline: none;
+        background: none;
+        cursor: pointer;
+        color: #0000ee;
+        padding: 0;
+        text-decoration: underline;
+        font-family: inherit;
+        font-size: inherit;
+      }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <title>Document</title>
   </head>
   <body>
     <div class="bg-[#EEEEEE]" id="container-div"></div>
-    <form
-      action="/signup"
-      method="POST"
+    <!-- class="bg-text absolute max-w-[400px] mx-auto p-4 bg-[#FFFFFF]/80 mt-8 rounded-2xl absolute z-2" -->
+    <div
       class="bg-text absolute max-w-[400px] mx-auto p-4 bg-[#FFFFFF]/80 mt-8 rounded-2xl absolute z-2"
-      onsubmit="set_localStorage_Value()"
     >
-      {% if error %}
-      <p class="text-red-500 font-bold">{{ error }}</p>
-      {% endif %}
-      <div class="form-group">
-        <label for="fullname">Full Name:</label>
-        <input type="text" id="fullname" name="fullname" required />
-      </div>
-      <div class="form-group">
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" required />
-      </div>
-      <div class="form-group">
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-      </div>
-      <div class="form-group">
-        <label for="confirm_password">Re-enter Password:</label>
-        <input
-          type="password"
-          id="confirm_password"
-          name="confirm_password"
-          required
-        />
-      </div>
-      <input class="hidden" name="mood" id="mood" />
-      <!-- <input class="hidden" name="preference" id="preference" />
-      <input class="hidden" name="type" id="type" /> -->
+      <form action="/signup" method="POST" onsubmit="set_localStorage_Value()">
+        {% if error %}
+        <p class="text-red-500 font-bold">{{ error }}</p>
+        {% endif %}
+        <div class="form-group">
+          <label for="fullname">Full Name:</label>
+          <input type="text" id="fullname" name="fullname" required />
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input type="text" id="city" name="city" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="form-group">
+          <label for="confirm_password">Re-enter Password:</label>
+          <input
+            type="password"
+            id="confirm_password"
+            name="confirm_password"
+            required
+          />
+        </div>
+        <div>Please select your last three orders</div>
+        <div class="form-group p-2">
+          <fieldset
+            class="group1"
+            id="order1"
+            required
+            onchange="set_input_option('order1','firstSelect')"
+          >
+            <label>
+              <input
+                name="order1"
+                type="radio"
+                value="veg"
+                class="order1"
+              />Veg</label
+            >
+            <label
+              ><input
+                name="order1"
+                type="radio"
+                value="chicken"
+                class="order1"
+              />Chicken</label
+            >
+            <label>
+              <input
+                name="order1"
+                type="radio"
+                value="other non veg"
+                class="order1"
+              />
+              Other non veg
+            </label>
+          </fieldset>
+          <div></div>
+          <select
+            name="dish1"
+            id="firstSelect"
+            class="bg-red-400 select"
+            required
+          >
+            <option value="" disabled selected></option>
+          </select>
+        </div>
 
-      <input type="submit" value="Submit" />
-    </form>
+        <div class="form-group">
+          <fieldset
+            class="group2"
+            id="order2"
+            required
+            onchange="set_input_option('order2','secondSelect')"
+          >
+            <label
+              ><input
+                name="order2"
+                type="radio"
+                value="veg"
+                class="order2"
+              />Veg</label
+            >
+            <label
+              ><input
+                name="order2"
+                type="radio"
+                value="chicken"
+                class="order2"
+              />Chicken</label
+            >
+            <label
+              ><input
+                name="order2"
+                type="radio"
+                value="other non veg"
+                class="order2"
+              />Other non veg</label
+            >
+          </fieldset>
+          <select name="dish2" id="secondSelect" class="p-4 select" required>
+            <option value="" disabled selected></option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <fieldset
+            class="group3"
+            id="order3"
+            required
+            onchange="set_input_option('order3','thirdSelect')"
+          >
+            <label>
+              <input
+                name="order3"
+                type="radio"
+                value="veg"
+                class="order3"
+              />Veg</label
+            >
+            <label>
+              <input
+                name="order3"
+                type="radio"
+                value="chicken"
+                class="order3"
+              />Chicken</label
+            >
+            <label
+              ><input
+                name="order3"
+                type="radio"
+                value="other non veg"
+                class="order3"
+              />Other non veg</label
+            >
+          </fieldset>
+          <select name="dish3" id="thirdSelect" class="p-4 select" required>
+            <option value="" disabled selected></option>
+          </select>
+        </div>
+
+        <input name="record_id" value="{{record_id}}" hidden />
+
+        <input
+          type="submit"
+          value="Submit"
+          class="submit-btn bg-green text-white"
+          id="submit-btn"
+        />
+      </form>
+      <!-- Form for Login-->
+      <form method="GET" action="/render_login" class="text-center mt-8">
+        <p>Already a user?</p>
+        <input name="record_id" value="{{record_id}}" hidden />
+        <input type="submit" value="Login" class="btn-link" />
+      </form>
+    </div>
     <script>
       function set_localStorage_Value() {
         document.getElementById('mood').value = localStorage.getItem('mood');
-        document.getElementById('preference').value = localStorage.getItem('preference');
+        document.getElementById('preference').value =
+          localStorage.getItem('preference');
         document.getElementById('type').value = localStorage.getItem('type');
         return true;
+      }
+
+      const set_input_option = (option, input_id) => {
+        const selectElement = document.getElementById(`${input_id}`);
+        const firstElementChild = selectElement.firstElementChild;
+        selectElement.innerHTML = '';
+        selectElement.append(firstElementChild);
+
+        let val = getRadioValue(option);
+
+        let arr = categorySelect(val);
+
+        let inpuData = arr;
+        for (let i = 0; i < inpuData.length; i++) {
+          let option = document.createElement('option');
+          option.setAttribute('value', inpuData[i]);
+
+          let optionText = document.createTextNode(inpuData[i]);
+          option.appendChild(optionText);
+
+          selectElement.appendChild(option);
+        }
+      };
+      const categorySelect = (radio) => {
+        if (radio === 'veg') {
+          data = ['CHANA', 'VEG KADAI', 'GOBI MASALA', 'UNDHIYO'];
+        } else if (radio === 'chicken') {
+          data = ['chicken1', 'chicken2'];
+        } else if (radio === 'other non veg') {
+          data = ['ot1 ', 'ot2 '];
+        }
+        return data;
+      };
+
+      $(document).ready(function () {
+        $('.select').select2();
+      });
+
+      function getRadioValue(option) {
+        var selectedOption = document.querySelector(
+          `input[name=${option}]:checked`
+        );
+        if (selectedOption) {
+          var value = selectedOption.value;
+          console.log(value);
+          return value;
+        } else {
+        }
       }
     </script>
   </body>
