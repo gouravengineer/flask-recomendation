@@ -91,36 +91,39 @@
         </p>
         <p class="font-normal text-base">Let us help you out</p>
       </div>
+      <form action="/home" method="POST">
+        <div class="mt-6 flex flex-col gap-4 ml-3">
+          <div class="bg-blue-200 p-3 rounded-xl h-fit">
+            <p class="mb-4 text-xl">What are you in mood of?</p>
+            <select name="course_type" class="rounded-lg p-2">
+              <option value="main course">Main course</option>
+              <option value="starter">Starter</option>
+              <option value="breakfast">Breakfast</option>
+            </select>
+          </div>
+          <!-- <input type=""/> -->
 
-      <div class="mt-6 flex flex-col gap-4 ml-3">
-        <div class="bg-blue-200 p-3 rounded-xl h-fit">
-          <p class="mb-4 text-xl">What are you in mood of?</p>
-          <select class="rounded-lg p-2">
-            <option>Main course</option>
-            <option>Starter</option>
-            <option>Breakfast</option>
-          </select>
-        </div>
-        <!-- <input type=""/> -->
+          <div class="bg-red-200 p-3 rounded-xl h-fit">
+            <p class="mb-4 text-xl">What's your food peference?</p>
+            <select name="food_type" class="rounded-lg p-2">
+              <option value="veg">Veg</option>
+              <option value="chicken">Chicken</option>
+              <option value="other non veg">Other Non-Veg</option>
+            </select>
+          </div>
 
-        <div class="bg-red-200 p-3 rounded-xl h-fit">
-          <p class="mb-4 text-xl">What's your food peference?</p>
-          <select class="rounded-lg p-2">
-            <option>Veg</option>
-            <option>Chicken</option>
-            <option>Other Non-Veg</option>
-          </select>
+          <div class="bg-green-200 p-3 rounded-xl h-fit">
+            <p class="mb-4 text-xl">Gravy or dry?</p>
+            <select name="dry_or_gravy" class="rounded-lg p-2">
+              <option value="dry">dry</option>
+              <option value="gravy">Gravy</option>
+              <!-- <option></option> -->
+            </select>
+          </div>
+          <input type="submit">
         </div>
 
-        <div class="bg-green-200 p-3 rounded-xl h-fit">
-          <p class="mb-4 text-xl">Gravy or dry?</p>
-          <select class="rounded-lg p-2">
-            <option>dry</option>
-            <option>Gravy</option>
-            <!-- <option></option> -->
-          </select>
-        </div>
-      </div>
+    </form>
       <!-- <span class="material-symbols-outlined mr-0 bg-red-600 relative ml-72"
         >arrow_forward</span
       > -->

@@ -99,8 +99,8 @@
   <body>
     <div
       class="bg-text absolute max-w-[400px] mx-auto p-4 bg-[#FFFFFF]/80 mt-8 rounded-2xl absolute z-2"
-    >
-      <form action="/signup" method="POST" onsubmit="set_localStorage_Value()">
+    > 
+      <form action="/login" method="POST" onsubmit="set_localStorage_Value()">
         {% if error %}
         <p class="text-red-500 font-bold">{{ error }}</p>
         {% endif %}
@@ -122,7 +122,7 @@
           id="submit-btn"
         />
       </form>
-      <form method="GET" action="/render_login" class="text-center mt-8">
+      <form method="GET" action="/render_signup" class="text-center mt-8">
         <p>New User?</p>
         <input name="record_id" value="{{record_id}}" hidden />
         <input type="submit" value="Login" class="btn-link" />
