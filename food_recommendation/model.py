@@ -14,7 +14,7 @@ class User(db.Model):
 
 class Records(db.Model):
     id = db.Column(db.Integer, primary_key=True,unique=True,nullable=False)
-    user_id = email = db.Column(db.String(120), nullable=False)
+    user_id = db.Column(db.String(120), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     course_type = db.Column(db.String(120), nullable=False)
     food_type = db.Column(db.String(120), nullable=False)
@@ -36,4 +36,4 @@ class Orders(db.Model):
     rating = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"User('{self.id}', '{self.user_id}', '{self.timestamp}', '{self.timestamp}', '{self.food_choice}', '{self.food_type}', '{self.rating}')"
+        return f"User('{self.id}', '{self.user_id}', '{self.timestamp}', '{self.food_choice}', '{self.food_type}', '{self.rating}')"
