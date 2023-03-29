@@ -29,7 +29,7 @@ class Records(db.Model):
     
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True,unique=True,nullable=False)
-    user_id = email = db.Column(db.String(120), nullable=False)
+    user_id = db.Column(db.String(120), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     food_choice = db.Column(db.String(120), nullable=False)
     food_type = db.Column(db.String(120), nullable=False)
