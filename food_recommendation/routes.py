@@ -1,13 +1,24 @@
 from food_recommendation import app,db
 import json
 from flask import render_template,request,redirect,url_for,flash
-from food_recommendation.model import User
+from food_recommendation.model import User,Records,Orders
 from flask_bcrypt import Bcrypt
 bcrypt=Bcrypt()
 
-@app.route("/home")
-@app.route("/")
+@app.route("/home",methods=('GET', 'POST'))
+@app.route("/",methods=('GET', 'POST'))
 def home():
+    if request.method == 'Post':
+        course_type = request.form['mood']
+        food_type = request.form['preference']
+        dry_or_gravy = request.form['type']
+        with app.app_context():
+            db.create_all()
+            record=Records(course_type=course_type,food_type=food_type,dry_or_gravy=dry_or_gravy)
+            db.session.add(record)
+            db.session.commit()
+        return render_template('login.html',record_id=record.id)
+
     return render_template('home.html')
 
 def get_total_food():
