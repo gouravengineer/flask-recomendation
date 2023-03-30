@@ -2,6 +2,7 @@ from food_recommendation import app,db
 import json
 from flask import render_template,request,redirect,url_for,flash
 from food_recommendation.model import User,Records,Orders
+from food_recommendation.recommendation import recommend_food
 from flask_bcrypt import Bcrypt
 bcrypt=Bcrypt()
 
@@ -53,8 +54,9 @@ def login():
                 error = "Password not verified"
                 return render_template('login.html',error=error,record_id=record_id)
             else:
-
-                return redirect(url_for('home'))
+                query = Records.query.filter_by(id=record_id).all()
+                return json.dumps()
+                # return redirect(url_for('home'))
             
     return render_template('login.html',record_id=record_id)
 
@@ -91,7 +93,7 @@ def signup():
 def render_signup():
     if request.method == 'POST':
         record_id = request.form['record_id']
-        return render_template('signup.html',error=None,record_id=record_id)
+        return render_template('signup.html',error=None,record_id=record_id,total_food=get_total_food())
 
 @app.route("/render_login",methods=('GET','POST'))
 def render_login():
