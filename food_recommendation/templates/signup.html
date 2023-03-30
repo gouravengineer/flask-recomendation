@@ -108,11 +108,13 @@
     <div
       class="bg-text absolute max-w-[400px] mx-auto p-4 bg-[#FFFFFF]/80 mt-8 rounded-2xl absolute z-2"
     >
-      <form action="/signup" method="POST" onsubmit="set_localStorage_Value()">
+    <!-- onsubmit="set_localStorage_Value()" -->
+      <form action="/signup" method="POST" id="myform"> 
         {% if error %}
         <p class="text-red-500 font-bold">{{ error }}</p>
         {% endif %}
         <div class="form-group">
+          
           <label for="fullname">Full Name:</label>
           <input type="text" id="fullname" name="fullname" required />
         </div>
@@ -128,142 +130,68 @@
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required />
         </div>
+        
         <div class="form-group">
           <label for="confirm_password">Re-enter Password:</label>
-          <input
-            type="password"
-            id="confirm_password"
-            name="confirm_password"
-            required
-          />
+          <input type="password"  id="confirm_password"  name="confirm_password"  required />
         </div>
         <div>Please select your last three orders</div>
         <div class="form-group p-2">
-          <fieldset
-            class="group1"
-            id="order1"
-            required
-            onchange="set_input_option('order1','firstSelect')"
-          >
-            <label>
-              <input
-                name="order1"
-                type="radio"
-                value="veg"
-                class="order1"
-              />Veg</label
-            >
-            <label
-              ><input
-                name="order1"
-                type="radio"
-                value="chicken"
-                class="order1"
-              />Chicken</label
-            >
-            <label>
-              <input
-                name="order1"
-                type="radio"
-                value="other non veg"
-                class="order1"
-              />
-              Other non veg
-            </label>
+          <fieldset  class="group1"   onchange="set_input_option('order1','firstdish')">
+            <label>  <input  name="order1"  type="radio"  value="veg"  class="order1"  />Veg</label>
+            <label  ><input name="order1"  type="radio"  value="chicken"  class="order1" />Chicken</label>
+            <label> <input  name="order1"  type="radio"  value="other_non_veg"   class="order1"  />Other non veg</label>
           </fieldset>
-          <div></div>
-          <select
-            name="dish1"
-            id="firstSelect"
-            class="bg-red-400 select"
-            required
-          >
-            <option value="" disabled selected></option>
-          </select>
+
+          <input  autoComplete="on" name="firstdish" id="firstdish">
+  
         </div>
 
         <div class="form-group">
-          <fieldset
-            class="group2"
-            id="order2"
-            required
-            onchange="set_input_option('order2','secondSelect')"
-          >
-            <label
-              ><input
-                name="order2"
-                type="radio"
-                value="veg"
-                class="order2"
-              />Veg</label
-            >
-            <label
-              ><input
-                name="order2"
-                type="radio"
-                value="chicken"
-                class="order2"
-              />Chicken</label
-            >
-            <label
-              ><input
-                name="order2"
-                type="radio"
-                value="other non veg"
-                class="order2"
-              />Other non veg</label
-            >
+          <fieldset class="group2" onchange="set_input_option('order2','seconddish')">
+            <label><input  name="order2"  type="radio"  value="veg"  class="order2" />Veg<label>
+            <label><input name="order2"  type="radio"  value="chicken"  class="order2"  />Chicken</label>
+            <label><input  name="order2"  type="radio"  value="other_non_veg"  class="order2"  />Other non veg</label>
           </fieldset>
-          <select name="dish2" id="secondSelect" class="p-4 select" required>
-            <option value="" disabled selected></option>
-          </select>
+          <input  autoComplete="on" name="seconddish" id="seconddish">
         </div>
 
         <div class="form-group">
-          <fieldset
-            class="group3"
-            id="order3"
-            required
-            onchange="set_input_option('order3','thirdSelect')"
-          >
-            <label>
-              <input
-                name="order3"
-                type="radio"
-                value="veg"
-                class="order3"
-              />Veg</label
-            >
-            <label>
-              <input
-                name="order3"
-                type="radio"
-                value="chicken"
-                class="order3"
-              />Chicken</label
-            >
-            <label
-              ><input
-                name="order3"
-                type="radio"
-                value="other non veg"
-                class="order3"
-              />Other non veg</label
-            >
+          <fieldset class="group3"  onchange="set_input_option('order3','thirddish')">
+            <label>  <input  name="order3"  type="radio"  value="veg"  class="order3"  />Veg</label>
+            <label><input  name="order3"  type="radio"  value="chicken"  class="order3"  />Chicken</label>
+            <label><input  name="order3"  type="radio"  value="other_non_veg"  class="order3"  />Other non veg</label>
           </fieldset>
-          <select name="dish3" id="thirdSelect" class="p-4 select" required>
-            <option value="" disabled selected></option>
-          </select>
-        </div>
+          <input  autoComplete="on" name="thirddish" id="thirddish">
+        </div> 
 
-        <input name="record_id" value="{{record_id}}" hidden />
+        <datalist id="veg">
+          {% for i in total_food['veg'] %}
+              <option>{{i}}</option>
+          {% endfor %}
+        </datalist>
+        
+          <datalist id="chicken">
+              {% for i in total_food['chicken'] %}
+                  <option>{{i}}</option>
+              {% endfor %}
+          </datalist>
 
-        <input
+          <datalist id="other_non_veg">
+            {% for i in total_food['other non veg'] %}
+                <option>{{i}}</option>
+            {% endfor %}
+        </datalist>
+
+        <!-- <input name="record_id" value="{{record_id}}" hidden /> -->
+
+        <!-- <input
           type="submit"
           value="Submit"
           class="submit-btn bg-green text-white"
           id="submit-btn"
-        />
+        /> -->
+        <input type="submit" form="myform" value="Submit">
       </form>
       <!-- Form for Login-->
       <form method="GET" action="/render_login" class="text-center mt-8">
@@ -273,50 +201,12 @@
       </form>
     </div>
     <script>
-      function set_localStorage_Value() {
-        document.getElementById('mood').value = localStorage.getItem('mood');
-        document.getElementById('preference').value =
-          localStorage.getItem('preference');
-        document.getElementById('type').value = localStorage.getItem('type');
-        return true;
-      }
 
       const set_input_option = (option, input_id) => {
+        value=getRadioValue(option)
         const selectElement = document.getElementById(`${input_id}`);
-        const firstElementChild = selectElement.firstElementChild;
-        selectElement.innerHTML = '';
-        selectElement.append(firstElementChild);
-
-        let val = getRadioValue(option);
-
-        let arr = categorySelect(val);
-
-        let inpuData = arr;
-        for (let i = 0; i < inpuData.length; i++) {
-          let option = document.createElement('option');
-          option.setAttribute('value', inpuData[i]);
-
-          let optionText = document.createTextNode(inpuData[i]);
-          option.appendChild(optionText);
-
-          selectElement.appendChild(option);
-        }
+        selectElement.setAttribute('list',value)
       };
-      const categorySelect = (radio) => {
-        if (radio === 'veg') {
-          data = ['CHANA', 'VEG KADAI', 'GOBI MASALA', 'UNDHIYO'];
-        } else if (radio === 'chicken') {
-          data = ['chicken1', 'chicken2'];
-        } else if (radio === 'other non veg') {
-          data = ['ot1 ', 'ot2 '];
-        }
-        return data;
-      };
-
-      $(document).ready(function () {
-        $('.select').select2();
-      });
-
       function getRadioValue(option) {
         var selectedOption = document.querySelector(
           `input[name=${option}]:checked`
@@ -328,6 +218,12 @@
         } else {
         }
       }
+
+      // $(document).ready(function () {
+      //   $('.select').select2();
+      // });
+
+      
     </script>
   </body>
 </html>
