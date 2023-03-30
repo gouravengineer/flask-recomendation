@@ -120,10 +120,9 @@
               <!-- <option></option> -->
             </select>
           </div>
-          <input type="submit">
+          <input type="submit" />
         </div>
-
-    </form>
+      </form>
       <!-- <span class="material-symbols-outlined mr-0 bg-red-600 relative ml-72"
         >arrow_forward</span
       > -->
@@ -161,6 +160,15 @@
           modal.style.display = 'none';
         }
       };
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          console.log('Latitude: ' + latitude + ' Longitude: ' + longitude);
+        });
+      } else {
+        console.log('Geolocation is not supported by this browser.');
+      }
     </script>
   </body>
 </html>
