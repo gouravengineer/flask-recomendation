@@ -7,7 +7,9 @@ from flask_bcrypt import Bcrypt
 bcrypt=Bcrypt()
 
 
-
+@app.route("/about")
+def about():
+    return render_template('about_us.html')
 
 @app.route("/home",methods=('GET', 'POST'))
 @app.route("/",methods=('GET', 'POST'))
