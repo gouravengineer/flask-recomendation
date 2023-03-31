@@ -124,32 +124,32 @@
         <div class="m-4 font-bold border-2 border-b-black shadow-3xl p-2 mt-8">Please select your last three orders</div>
         <div class="form-group p-2">
           <fieldset  class="group1"   onchange="set_input_option('order1','firstdish')">
-            <label>  <input  name="order1"  type="radio"  value="veg"  class="order1"  />Veg</label>
+            <label>  <input  name="order1"  type="radio"  value="veg"  class="order1"  required/>Veg</label>
             <label  ><input name="order1"  type="radio"  value="chicken"  class="order1" />Chicken</label>
             <label> <input  name="order1"  type="radio"  value="other_non_veg"   class="order1"  />Other non veg</label>
           </fieldset>
 
           <!-- Todo => below input option is not visible, can give it a border to distinguish it from white space -->
-          <input  autoComplete="on" name="firstdish" id="firstdish">
+          <input  autoComplete="off" name="firstdish" id="firstdish" required>
   
         </div>
 
         <div class="form-group">
           <fieldset class="group2" onchange="set_input_option('order2','seconddish')">
-            <label><input  name="order2"  type="radio"  value="veg"  class="order2" />Veg<label>
+            <label><input  name="order2"  type="radio"  value="veg"  class="order2" required/>Veg<label>
             <label><input name="order2"  type="radio"  value="chicken"  class="order2"  />Chicken</label>
             <label><input  name="order2"  type="radio"  value="other_non_veg"  class="order2"  />Other non veg</label>
           </fieldset>
-          <input  autoComplete="on" name="seconddish" id="seconddish">
+          <input  autoComplete="off" name="seconddish" id="seconddish" required>
         </div>
 
         <div class="form-group">
-          <fieldset class="group3"  onchange="set_input_option('order3','thirddish')">
-            <label>  <input  name="order3"  type="radio"  value="veg"  class="order3"  />Veg</label>
+          <fieldset class="group3"  onchange="set_input_option('order3','thirddish')" >
+            <label>  <input  name="order3"  type="radio"  value="veg"  class="order3"  required/>Veg</label>
             <label><input  name="order3"  type="radio"  value="chicken"  class="order3"  />Chicken</label>
             <label><input  name="order3"  type="radio"  value="other_non_veg"  class="order3"  />Other non veg</label>
           </fieldset>
-          <input autoComplete="on" name="thirddish" id="thirddish">
+          <input autoComplete="off" name="thirddish" id="thirddish" required>
         </div> 
 
         <datalist id="veg">
@@ -169,8 +169,8 @@
                 <option>{{i}}</option>
             {% endfor %}
         </datalist>
-
-        <!-- <input name="record_id" value="{{record_id}}" hidden /> -->
+        {{record_id}}
+        <input name="record_id" value="{{record_id}}" hidden />
 
         <!-- <input
           type="submit"
@@ -182,7 +182,7 @@
       </form>
       <!-- Form for Login-->
       <form method="GET" action="/render_login" class="text-center mt-8">
-        <p>Already a user?</p>
+        <p>Already a user?</p> 
         <input name="record_id" value="{{record_id}}" hidden />
         <input type="submit" value="Login" class="btn-link" />
       </form>

@@ -19,7 +19,6 @@ def home():
         course_type = request.form['course_type']
         food_type = request.form['food_type']
         dry_or_gravy = request.form['dry_or_gravy']
-        print(course_type,food_type,dry_or_gravy)
         with app.app_context():
             db.create_all()
             record=Records(course_type=course_type,food_type=food_type,dry_or_gravy=dry_or_gravy)
@@ -72,9 +71,7 @@ def signup():
         city =request.form['city']
         password = request.form['password']
         hashed_password=bcrypt.generate_password_hash(password).decode('utf-8')
-        mood = request.form['mood']
-        preference = request.form['preference']
-        type = request.form['type']
+        order_list=[['order1','firstdish'],['order2','seconddish'],['order2','thirddish']]
         with app.app_context():
             db.create_all()
             check = User.query.filter_by(email=email).all()
@@ -86,9 +83,23 @@ def signup():
             user = User(name=fullname,email=email,password=hashed_password,city=city)
             db.session.add(user)
             db.session.commit()
-            user=User.query.all()
-            print(user)    
-        return redirect(url_for('home'))
+            for i in order_list:
+                food_choice=request.form[i[1]]
+                food_type=request.form[i[0]]
+                order= Orders(user_id=email,food_choice=food_choice,food_type=food_type,rating=5)
+                db.session.add(order)
+                db.session.commit()
+            orders=Orders.query.filter_by(user_id=email).all()
+            orders=[x.to_dict() for x in orders]
+            try:
+                record_id = request.form['record_id']
+            except:
+                return redirect(url_for('home'))
+            record = Records.query.filter_by(id=record_id).first()
+            record.user_id=email
+            db.session.commit()
+            record=record.to_dict()
+        return recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders)
     return render_template('signup.html',total_food=get_total_food())
 
 @app.route("/render_signup",methods=('GET','POST'))
