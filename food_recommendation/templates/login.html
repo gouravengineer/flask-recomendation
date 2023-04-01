@@ -15,14 +15,15 @@
         box-sizing: border-box;
       }
       #container-div {
-        background-image: url('/static/Image/food_3.jpg');
-        height: 100%;
+        height: 100vh;
+        width: 100vw;
         filter: blur(3px);
-        -webkit-filter: blur(3px);
-        height: 100%;
+        -webkit-filter: blur(8px);
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        position: absolute;
+        z-index: -2;
       }
       .bg-text {
         background-color: rgb(0, 0, 0);
@@ -43,7 +44,7 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
-        max-width: 400px;
+        /* max-width: 400px; */
       }
 
       label {
@@ -77,7 +78,7 @@
         right: 0;
       }
 
-      .submit-btn:hover {
+      #submit-btn:hover {
         background-color: white;
         color: #45a049;
         border: 2px solid #4caf50;
@@ -93,40 +94,139 @@
         font-family: inherit;
         font-size: inherit;
       }
+      .form-div {
+        background-color: rgba(0, 0, 0, 0.6);
+        border: 3px solid #f1f1f1;
+      }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <div
-      class="bg-text absolute max-w-[400px] mx-auto p-4 bg-[#FFFFFF]/80 mt-8 rounded-2xl absolute z-2"
-    > 
-      <form action="/login" method="POST" onsubmit="set_localStorage_Value()">
-        {% if error %}
-        <p class="text-red-500 font-bold">{{ error }}</p>
-        {% endif %}
-        <div class="form-group">
-          <label for="email">E-mail:</label>
-          <input type="email" id="email" name="email" required />
+    <div id="container-div" class="bg-black/50"></div>
+    <div class="w-full lg:w-3/5 mx-auto p-4 lg:p-16">
+      <div
+        class="flex flex-col h-[400px] lg:h-[450px] lg:flex-row items-center justify-center"
+      >
+        <div class="w-full h-full lg:w-1/2 slideshow-container hidden sm:block">
+          <div class="mySlides fade w-full h-full">
+            <img
+              src="/food_recommendation/static/Image/fun_1.jpg"
+              class="h-full"
+            />
+          </div>
+          <div class="mySlides fade w-full h-full">
+            <img
+              src="/food_recommendation/static/Image/fun_2.jpg"
+              class="h-full"
+            />
+          </div>
+          <div class="mySlides fade w-full h-full">
+            <img
+              src="/food_recommendation/static/Image/fun_4.jpg"
+              class="h-full"
+            />
+          </div>
+          <div class="mySlides fade w-full h-full">
+            <img
+              src="/food_recommendation/static/Image/fun_5.jpg"
+              class="h-full"
+            />
+          </div>
+          <div class="mySlides fade w-full h-full">
+            <img
+              src="/food_recommendation/static/Image/fun_6.jpg"
+              class="h-full"
+            />
+          </div>
+          <div class="mySlides fade w-full h-full">
+            <img
+              src="/food_recommendation/static/Image/fun_7.jpg"
+              class="h-full"
+            />
+          </div>
+          <div class="mySlides fade w-full h-full">
+            <img
+              src="/food_recommendation/static/Image/fun_8.jpg"
+              class="h-full"
+            />
+          </div>
+          <div class="mySlides fade w-full h-full">
+            <img
+              src="/food_recommendation/static/Image/fun_9.jpg"
+              class="h-full"
+            />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required />
+        <div>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
         </div>
-        <input class="hidden" name="mood" id="mood" />
-        <input name="record_id" value="{{record_id}}" hidden />
+        <div
+          class="form-div h-full lg:w-1/2 w-full h-[300px] lg:h-[450px] mx-auto p-4 pb-0 bg-[#FFFFFF]/80 text-center"
+        >
+          <form
+            action="/login"
+            method="POST"
+            onsubmit="set_localStorage_Value()"
+            class=""
+          >
+            {% if error %}
+            <p class="font-bold">{{ error }}</p>
+            {% endif %}
+            <p class="font-bold text-2xl mb-8">Login</p>
+            <div class="form-group">
+              <label for="email">E-mail:</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required />
+            </div>
+            <input class="hidden" name="mood" id="mood" />
+            <input name="record_id" value="{{record_id}}" hidden />
 
-        <input
-          type="submit"
-          value="Submit"
-          class="submit-btn bg-green text-white"
-          id="submit-btn"
-        />
-      </form>
-      <form method="POST" action="/render_signup" class="text-center mt-8">
-        <p>New User?</p>
-        <input name="record_id" value="{{record_id}}" hidden />
-        <input type="submit" value="Signup" class="btn-link" />
-      </form>
+            <input
+              type="submit"
+              value="Submit"
+              class="submit-btn bg-green text-white"
+              id="submit-btn"
+            />
+          </form>
+          <form method="POST" action="/render_signup" class="text-center mt-8">
+            <p>New User?</p>
+            <input name="record_id" value="{{record_id}}" hidden />
+            <input type="submit" value="Signup" class="btn-link" />
+          </form>
+        </div>
+      </div>
     </div>
+    <script>
+      let slideIndex = 0;
+      function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName('mySlides');
+        let dots = document.getElementsByClassName('dot');
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = 'none';
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {
+          slideIndex = 1;
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(' active', '');
+        }
+        slides[slideIndex - 1].style.display = 'block';
+        dots[slideIndex - 1].className += ' active';
+        setTimeout(showSlides, 4000); // Change image every 2 seconds
+      }
+      showSlides();
+    </script>
   </body>
 </html>
