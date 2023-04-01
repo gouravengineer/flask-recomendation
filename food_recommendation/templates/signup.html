@@ -9,22 +9,25 @@
       body,
       html {
         /* height: 100%; */
-        /* height: 100vh; */
+        height: 100vh;
+        width: 100vw;
       }
 
       * {
         box-sizing: border-box;
       }
       #container-div {
-        background-image: url('/static/Image/food_3.jpg');
-        height: 100%;
+        background-image: url('/food_recommendation/static/Image/bg_1.jpg');
+        height: 100vh;
+        width: 100vw;
         filter: blur(3px);
         -webkit-filter: blur(3px);
-        height: 100%;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        /* overflow-y: ; */
+        position: absolute;
+        z-index: -2;
+        background-attachment: fixed;
       }
       .form-group {
         display: flex;
