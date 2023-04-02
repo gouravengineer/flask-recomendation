@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- <script src="jquery-3.6.3.min.js"></script> -->
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,36 +24,85 @@
       }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- <script src="jquery-3.6.3.min.js"></script> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> --> -->
+    <script>
+      $( function() {
+        $( "#slider-range" ).slider({
+          range: true,
+          min: 200,
+          max: 1000,
+          values: [ 300, 600 ],
+          slide: function( event, ui ) {
+            $( "#amount" ).val( "₹" + ui.values[ 0 ] + " - ₹" + ui.values[ 1 ] );
+          }
+        });
+        $( "#amount" ).val( "₹" + $( "#slider-range" ).slider( "values", 0 ) +
+          " - ₹" + $( "#slider-range" ).slider( "values", 1 ) );
+      } );
+      </script>
+    
+    
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
   </head>
   <body>
+   
     <nav></nav>
     <div class="background"></div>
     <div class="flex flex-col gap-8 p-[20px]">
+      <p>
+      <label for="amount">Price range:</label>
+      <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+    </p>
+      <div id="slider-range"></div>
+    
+    <form action="/recommend_me_foods" method="POST" id="dish-form">
+      <input type="text" >
+      <input id="dish" name="dish"  hidden>
+      <input id="record_id" name="record_id" value="{{ record_id }}" hidden>
+      <input id="max" name="max" hidden />
+      <input id="min" name="min" hidden />
+      <input id="latitude" name="latitude" hidden />
+      <input id="longitude" name="longitude" hidden />
+
+    </form>
+
       <h1 class="font-bold text-3xl text-white">
         Based on your choices,our recommendations are : 
       </h1>
+      
       <div class="flex flex-col" id="container">
+        <p>But first, please provide your budget</p>
+ <!-- setting the 3 showing structure -->
         {% set recom_length =recom|length %}
         
           {% for i in range(0,recom_length,3) %}
             <div class="grid grid-cols-3 gap-4" id="sub-container">
               {% if recom_length>i+3%}
                 {% for j in range(i+3) %}
-                <div class="bg-white w-[200px] h-[200px]">{{ recom[j] }}</div>
+                  <div class="bg-green-500 w-[200px] h-[200px]" >
+                    
+                    <button onclick="get_restaurant( `{{recom[j]}}` ) ">Get Restaurant</button>
+                    {{recom[j]}}
+                  </div>
                 {% endfor %}
               {% else %}
                 {% for j in range(i,recom_length) %}
-                <div class="bg-white w-[200px] h-[200px]">{{ recom[j] }}</div>
+                  <div class="bg-green-500 w-[200px] h-[200px]" >
+                    <button onclick="get_restaurant(`{{recom[j]}}`) ">Get Restaurant</button>
+                  </div>
                 {% endfor %}
               {% endif %}
             </div>
-        
         {% endfor %}
       </div>
+
      
       </div>
+    </div>
+    
+
+    <div class="flex justify-between p-20">
+      <button id="go-back"  class="p-4 bg-white text-black font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="GoBack()">  Go back  </button>
+      <button  id="load-more"  class="p-4 bg-green-500 text-white font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="LoadMore()">  Load more  </button>
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -60,8 +114,79 @@
               console.log(i)
             }
           }
-    });
-      
+      });
+      function get_restaurant(input){
+        document.getElementById('dish').setAttribute("value",input)
+        let min = $( "#slider-range" ).slider( "values", 0 )
+        let max = $( "#slider-range" ).slider( "values", 1 )
+        document.getElementById('max').setAttribute("value",max)
+        document.getElementById('min').setAttribute("value",min)
+        document.getElementById('latitude').setAttribute("value",9.8888)
+        document.getElementById('longitude').setAttribute("value",7.66)
+        initGeolocation()
+        document.getElementById("dish-form").submit();
+        
+      }
+      let load_more_button = document.getElementById('load-more');
+      let go_back_button = document.getElementById('go-back');
+      function LoadMore() {
+        all_sub_container=document.querySelectorAll('[id=sub-container]');
+        for (let i = 0; i < all_sub_container.length; i++){
+          if ((all_sub_container.length)-1==i){
+            load_more_button.disabled=true;
+          }
+        
+          if (all_sub_container[i].style.display!='none'){
+            all_sub_container[i].style.display='none'
+            is_hide=true;
+          }
+          else {
+            all_sub_container[i].style.display=''
+            break;
+          }
+        }
+        }
+        function GoBack(){
+          load_more_button.disabled=false;
+          for (let i = all_sub_container.length-1; i > 0; i--){
+            if (all_sub_container[i].style.display!='none'){
+            all_sub_container[i].style.display='none'
+            all_sub_container[i-1].style.display=''
+            break
+          }
+
+          }
+
+        }
+
+      function initGeolocation()
+     {
+        if( navigator.geolocation )
+        {
+           // Call getCurrentPosition with success and failure callbacks
+           navigator.geolocation.getCurrentPosition( success, fail );
+        }
+        else
+        {
+           alert("Sorry, your browser does not support geolocation services.");
+        }
+     }
+
+     function success(position)
+     {
+         document.getElementById('longitude').value = position.coords.longitude;
+         document.getElementById('latitude').value = position.coords.latitude
+         
+     }
+
+     function fail()
+     {
+        alert("Please allow Brouser for location ")
+     }
+
+    //  initGeolocation();
+
+
     </script>
   </body>
 </html>
