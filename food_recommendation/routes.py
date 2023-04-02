@@ -50,14 +50,24 @@ def login():
             return render_template('login.html',error=error,record_id=record_id)
         else:
             hash_password=user[0].password
-            verify_password=bcrypt.check_password_hash(hash_password,password,record_id=record_id)
+            verify_password=bcrypt.check_password_hash(hash_password,password)
             if not verify_password:
                 error = "Password not verified"
                 return render_template('login.html',error=error,record_id=record_id)
             else:
-                query = Records.query.filter_by(id=record_id).all()
-                return json.dumps()
-                # return redirect(url_for('home'))
+                print(record_id=='None',type(record_id))
+                if record_id=='None':
+                    return redirect(url_for('home'))
+                record = Records.query.filter_by(id=record_id).first()
+                record.user_id=email
+                db.session.commit()
+                record=record.to_dict()
+                orders=Orders.query.filter_by(user_id=email).all()
+                orders=[x.to_dict() for x in orders]
+                recom = recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders)
+                return redirect(url_for('recommend_me_food', recom=json.dumps(recom)))
+                # recommend_me_food(recom)
+
             
     return render_template('login.html',record_id=record_id)
 
@@ -99,7 +109,9 @@ def signup():
             record.user_id=email
             db.session.commit()
             record=record.to_dict()
-        return recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders)
+        recom = recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders)
+        # return redirect(url_for('recommend_me_food', recom=recom))
+        recommend_me_food(recom)
     return render_template('signup.html',total_food=get_total_food())
 
 @app.route("/render_signup",methods=('GET','POST'))
@@ -114,5 +126,11 @@ def render_login():
         record_id = request.form['record_id']
         return render_template('login.html',error=None,record_id=record_id)
 
+@app.route("/recommend_me_foods",methods=('GET','POST'))
+def recommend_me_food():
+    recom=request.args.get('recom')
+    recom=json.loads(recom)
+    print(recom)
+    return render_template('recommend.html',recom=recom)
 if __name__ == '__main__':
     app.run(debug=True)
