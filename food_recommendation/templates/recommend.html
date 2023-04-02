@@ -22,8 +22,8 @@
         position: absolute;
         z-index: -2;
       }
-    </style>
-    <script src="https://cdn.tailwindcss.com"></script>
+    </style><script src="https://cdn.tailwindcss.com"></script>
+    
     <script>
       $( function() {
         $( "#slider-range" ).slider({
@@ -48,7 +48,7 @@
     <nav></nav>
     <div class="background"></div>
     <div class="flex flex-col gap-8 p-[20px]">
-      <p>
+      <p>But first, please provide your budget
       <label for="amount">Price range:</label>
       <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
     </p>
@@ -70,8 +70,8 @@
       </h1>
       
       <div class="flex flex-col" id="container">
-        <p>But first, please provide your budget</p>
- <!-- setting the 3 showing structure -->
+        
+          <!-- setting the 3 showing structure -->
         {% set recom_length =recom|length %}
         
           {% for i in range(0,recom_length,3) %}
@@ -88,6 +88,7 @@
                 {% for j in range(i,recom_length) %}
                   <div class="bg-green-500 w-[200px] h-[200px]" >
                     <button onclick="get_restaurant(`{{recom[j]}}`) ">Get Restaurant</button>
+                    {{recom[j]}}
                   </div>
                 {% endfor %}
               {% endif %}

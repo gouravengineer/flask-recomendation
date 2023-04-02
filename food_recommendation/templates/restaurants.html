@@ -5,15 +5,99 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div>
-        <div id="container">
-                    {{recom_rest}}
+    <form action="/recommend_me_restaurant" method="POST" id="order-form">
+        <input id="suggested_restaurant" name="suggested_restaurant"  hidden>
+        <input  name="record_id" value="{{record_id}}"  hidden>
+        
+      </form>
+      <div class="flex flex-col gap-8 p-[20px]">
+    
+    
+        <div class="flex flex-col" id="container">
+
+            <!-- setting the 3 showing structure -->
+          {% set recom_length =recom_rest|length %}
+            {% for i in range(0,recom_length,3) %}
+              <div class="grid grid-cols-3 gap-4" id="sub-container">
+                {% if recom_length>i+3%}
+                  {% for j in range(i+3) %}
+                    <div class="bg-green-500 w-[200px] h-[200px]" >
+                      
+                      <button onclick="get_order('{{recom_rest[j][0]}}') ">Proceed Order</button>
+                      {{recom_rest[j]}}
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  {% for j in range(i,recom_length) %}
+                    <div class="bg-green-500 w-[200px] h-[200px]" >
+                      <button onclick="get_order('{{recom_rest[j][0]}}') ">Proceed Order</button>
+                      {{recom_rest[j]}}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+          {% endfor %}
         </div>
     </div>
+
+    <div class="flex justify-between p-20">
+        <button id="go-back"  class="p-4 bg-white text-black font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="GoBack()">  Go back  </button>
+        <button  id="load-more"  class="p-4 bg-green-500 text-white font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="LoadMore()">  Load more  </button>
+      </div>
     <script>
-       
+        function get_order(restaurant){
+
+            document.getElementById('suggested_restaurant').setAttribute("value",restaurant)
+            document.getElementById('order-form').submit()
+
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+        all_sub_container=document.querySelectorAll('[id=sub-container]');
+        console.log(all_sub_container)
+        for (let i = 0; i < all_sub_container.length; i++) {
+            if (i!=0){
+              all_sub_container[i].style.display= 'none'
+              console.log(i)
+            }
+          }
+      });
+      let load_more_button = document.getElementById('load-more');
+      let go_back_button = document.getElementById('go-back');
+      function LoadMore() {
+        all_sub_container=document.querySelectorAll('[id=sub-container]');
+        for (let i = 0; i < all_sub_container.length; i++){
+          if ((all_sub_container.length)-1==i){
+            load_more_button.disabled=true;
+          }
+        
+          if (all_sub_container[i].style.display!='none'){
+            all_sub_container[i].style.display='none'
+            is_hide=true;
+          }
+          else {
+            all_sub_container[i].style.display=''
+            break;
+          }
+        }
+        }
+        function GoBack(){
+          load_more_button.disabled=false;
+          for (let i = all_sub_container.length-1; i > 0; i--){
+            if (all_sub_container[i].style.display!='none'){
+            all_sub_container[i].style.display='none'
+            all_sub_container[i-1].style.display=''
+            break
+          }
+
+          }
+
+        }
+       function recommend_restaurant(){
+
+       }
     </script>
 </body>
 </html>
