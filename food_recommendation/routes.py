@@ -2,7 +2,7 @@ from food_recommendation import app,db
 import json
 from flask import render_template,request,redirect,url_for,flash
 from food_recommendation.model import User,Records,Orders
-from food_recommendation.recommendation import recommend_food
+from food_recommendation.recommendation import recommend_food,recommend_restaurant
 from flask_bcrypt import Bcrypt
 bcrypt=Bcrypt()
 
@@ -64,8 +64,9 @@ def login():
                 record=record.to_dict()
                 orders=Orders.query.filter_by(user_id=email).all()
                 orders=[x.to_dict() for x in orders]
+                print(orders)
                 recom = recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders)
-                return redirect(url_for('recommend_me_food', recom=json.dumps(recom)))
+                return redirect(url_for('recommend_me_food', recom=json.dumps(recom),record_id=record_id))
                 # recommend_me_food(recom)
 
             
@@ -80,6 +81,10 @@ def signup():
         email = request.form['email']
         city =request.form['city']
         password = request.form['password']
+        confirm_password = request.form['confirm_password']
+        if password!=confirm_password:
+            error="Pssword you enter are not same."
+            return render_template('signup.html',error=error,total_food=get_total_food())
         hashed_password=bcrypt.generate_password_hash(password).decode('utf-8')
         order_list=[['order1','firstdish'],['order2','seconddish'],['order2','thirddish']]
         with app.app_context():
@@ -110,8 +115,7 @@ def signup():
             db.session.commit()
             record=record.to_dict()
         recom = recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders)
-        # return redirect(url_for('recommend_me_food', recom=recom))
-        recommend_me_food(recom)
+        return redirect(url_for('recommend_me_food', recom=json.dumps(recom),record_id=record_id))
     return render_template('signup.html',total_food=get_total_food())
 
 @app.route("/render_signup",methods=('GET','POST'))
@@ -128,9 +132,31 @@ def render_login():
 
 @app.route("/recommend_me_foods",methods=('GET','POST'))
 def recommend_me_food():
+    if request.method == 'POST':
+        max_amount = request.form['max']
+        min_amount = request.form['min']
+        latitude =request.form['latitude']
+        longitude = request.form['longitude']
+        suggested_food = request.form['dish']
+        record_id = request.form['record_id']
+        record = Records.query.filter_by(id=record_id).first()
+        record.suggested_food=suggested_food
+        print(record.to_dict())
+        db.session.commit()
+        recom_rest=recommend_restaurant(suggested_food=suggested_food,longitude=longitude,latitude=latitude,min_amount=min_amount,max_amount=max_amount)
+        return redirect(url_for('recommend_me_restaurant', recom_rest=json.dumps(recom_rest),record_id=record_id))
     recom=request.args.get('recom')
+    record_id=request.args.get('record_id')
     recom=json.loads(recom)
-    print(recom)
-    return render_template('recommend.html',recom=recom)
+    print(recom,"record_id",record_id)
+    return render_template('recommend.html',recom=recom,record_id=record_id)
+
+@app.route("/recommend_me_restaurant",methods=('GET','POST'))
+def recommend_me_restaurant():
+    recom_rest=request.args.get('recom_rest')
+    record_id=request.args.get('record_id')
+    recom=json.loads(recom_rest)
+    print(recom,"record_id",record_id)
+    return render_template('restaurants.html',recom_rest=recom_rest,record_id=record_id)
 if __name__ == '__main__':
     app.run(debug=True)
