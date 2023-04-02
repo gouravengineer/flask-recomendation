@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <style>
+      .rating-box {
+        position: relative;
+        background: #fff;
+        padding: 25px 50px 35px;
+        border-radius: 25px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+      }
+      .rating-box header {
+        font-size: 22px;
+        color: #49403c;
+        font-weight: 500;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .rating-box .stars {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+      }
+      .stars i {
+        color: #e6e6e6;
+        font-size: 35px;
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+      .stars i.active {
+        color: #ff9c1a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container" class="flex gap-8"></div>
+    <p>Please select any of these restaurants</p>
+    <p>Wow we made it!!</p>
+
+    <p>Order 'x' from 'y'</p>
+
+    <p>Please review our service!!</p>
+    <p>Food recommended</p>
+    <div class="flex justify-around">
+      <div class="rating-box">
+        <header>Food recommendations</header>
+        <div class="stars">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let data = ['i1', 'i2', 'i3'];
+      let containerEl = document.getElementById('container');
+      for (let i = 0; i < data.length; i++) {
+        let p = document.createElement('span');
+        p.innerHTML = data[i];
+        containerEl.appendChild(p);
+      }
+
+      // Select all elements with the "i" tag and store them in a NodeList called "stars"
+      let stars = document.querySelectorAll('.stars i');
+      // let stars_2 = document.querySelectorAll('stars-2 i');
+
+      stars.forEach((star, index1) => {
+        // Add an event listener that runs a function when the "click" event is triggered
+        star.addEventListener('click', () => {
+          // Loop through the "stars" NodeList Again
+          stars.forEach((star, index2) => {
+            // Add the "active" class to the clicked star and any stars with a lower index
+            // and remove the "active" class from any stars with a higher index
+            index1 >= index2
+              ? star.classList.add('active')
+              : star.classList.remove('active');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
