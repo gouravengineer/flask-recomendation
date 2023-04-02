@@ -7,6 +7,7 @@
     <title>Document</title>
     <style>
       .background {
+
         /* background-image: url('/food_recommendation/static/Image/Model_dark_bg.jpg'); */
         /* background-image: url('/static/Image/Model_wooden_bg.jpg'); */
         background-color: white;
@@ -16,6 +17,13 @@
         background-repeat: no-repeat;
         position: absolute;
         z-index: -2;
+        background-attachment: fixed;
+      }
+      .child-div {
+        background-color: white;
+        font-size: large;
+        width: 200px;
+        height: 200px;
       }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,6 +37,11 @@
       <h1 class="font-bold text-3xl text-white">
         Based on your choices,our recommendations are : 
       </h1>
+      <!-- class="flex flex-col lg:flex-row w-full gap-8 justify-around flex-wrap " -->
+      <!-- <div class="flex flex-row gap-4" id="sub-container"></div> -->
+      <!-- <div class="flex gap-4 justify-between" id="container">  </div> -->
+
+
       <div class="flex flex-col" id="container">
         {% set recom_length =recom|length %}
         
@@ -50,6 +63,20 @@
      
       </div>
     </div>
+    <div class="flex justify-between p-20">
+      <button
+        id="go-back"
+        class="p-4 bg-white text-black font-semibold text-xl rounded-2xl hover:scale-[1.20]"
+      >
+        Go back
+      </button>
+      <button
+        id="load-more"
+        class="p-4 bg-green-500 text-white font-semibold text-xl rounded-2xl hover:scale-[1.20]"
+      >
+        Load more
+      </button>
+    </div>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         all_sub_container=document.querySelectorAll('[id=sub-container]');
@@ -61,7 +88,102 @@
             }
           }
     });
-      
+    
+    let containerEl = document.getElementById('container');
+
+      let loadMoreButton = document.getElementById('load-more');
+
+      let goBackButton = document.getElementById('go-back');
+
+      // Set a variable to keep track of the current index in the array
+      var currentIndex = 0;
+
+      const queryString = window.location.search;
+
+      const urlParams = new URLSearchParams(queryString);
+
+      let recoms = urlParams.get('recom');
+
+      recoms = ['item1', 'item2', 'item3', 'item4', 'item5', 'item6'];
+
+      // Function to create and display the next three divs
+      function displayNextThreeDivs() {
+        // hide the previous three divs
+
+        if (currentIndex !== 0) {
+          console.log('entered rem ');
+          for (var i = currentIndex - 3; i < currentIndex; i++) {
+            var spans = container.getElementsByTagName('span');
+            spans[i].style.display = 'none';
+          }
+        }
+
+        // Loop through the next three items in the array
+        for (var i = currentIndex; i < currentIndex + 3; i++) {
+          // Create a new div element
+          var span = document.createElement('span');
+          span.classList.add('child-div');
+
+          // Set the div's innerHTML to the current array item
+          span.innerHTML = recoms[i];
+
+          // Add the div to the container
+          container.appendChild(span);
+        }
+
+        // Update the current index
+        currentIndex += 3;
+
+        // Hide the load-more button if we've reached the end of the array
+        if (currentIndex >= recoms.length) {
+          // loadMoreButton.style.display = 'none';
+          loadMoreButton.disabled = true;
+          loadMoreButton.style.cursor = 'not-allowed';
+          goBackButton.disabled = false;
+        }
+      }
+      // Display the first three divs on page load
+      displayNextThreeDivs();
+
+      // Function to show the previous three divs and hide the current three
+      function goBackThreeDivs() {
+        // Hide the current three divs
+        for (var i = currentIndex - 1; i >= currentIndex - 3; i--) {
+          var spans = container.getElementsByTagName('span');
+          spans[i].style.display = 'none';
+        }
+
+        // Update the current index
+        currentIndex -= 3;
+
+        // Show the previous three divs
+        for (var i = currentIndex - 3; i < currentIndex; i++) {
+          var spans = container.getElementsByTagName('span');
+          spans[i].style.display = 'block';
+        }
+
+        // Show the load-more button if we're not at the end of the array
+        if (currentIndex < recoms.length) {
+          loadMoreButton.disabled = false;
+          loadMoreButton.style.cursor = 'pointer';
+        }
+
+        // Hide the go-back button if we're at the beginning of the array
+        if (currentIndex <= 3) {
+          goBackButton.disabled = true;
+          loadMoreButton.style.cursor = 'pointer';
+          goBackButton.style.cursor = 'not-allowed';
+        }
+      }
+
+      // Add a click event listener to the load-more button
+      loadMoreButton.addEventListener('click', function () {
+        displayNextThreeDivs();
+      });
+
+      goBackButton.addEventListener('click', function () {
+        goBackThreeDivs();
+      });
     </script>
   </body>
 </html>
