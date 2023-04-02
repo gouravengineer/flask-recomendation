@@ -81,6 +81,10 @@ def signup():
         email = request.form['email']
         city =request.form['city']
         password = request.form['password']
+        confirm_password = request.form['confirm_password']
+        if password!=confirm_password:
+            error="Pssword you enter are not same."
+            return render_template('signup.html',error=error,total_food=get_total_food())
         hashed_password=bcrypt.generate_password_hash(password).decode('utf-8')
         order_list=[['order1','firstdish'],['order2','seconddish'],['order2','thirddish']]
         with app.app_context():
