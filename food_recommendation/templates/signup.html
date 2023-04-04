@@ -105,11 +105,11 @@
         <div class="form-group">
           
           <label for="fullname">Full Name:</label>
-          <input type="text" id="fullname" name="fullname" required />
+          <input type="text" id="fullname" name="fullname" required onchange="setName()"/>
         </div>
         <div class="form-group">
           <label for="email">E-mail:</label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" required onchange="setEmail()"/>
         </div>
         <div class="form-group">
           <label for="city">City:</label>
@@ -117,7 +117,7 @@
         </div>
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required />
+          <input type="password" id="password" name="password" required onchange="setPass()"/>
         </div>
         
         <div class="form-group">
@@ -126,33 +126,33 @@
         </div>
         <div class="m-4 font-bold border-2 border-b-black shadow-3xl p-2 mt-8">Please select your last three orders</div>
         <div class="form-group p-2">
-          <fieldset  class="group1"   onchange="set_input_option('order1','firstdish')">
+          <fieldset  class="group1" onchange="set_input_option('order1','firstdish')">
             <label>  <input  name="order1"  type="radio"  value="veg"  class="order1"  required/>Veg</label>
             <label  ><input name="order1"  type="radio"  value="chicken"  class="order1" />Chicken</label>
             <label> <input  name="order1"  type="radio"  value="other_non_veg"   class="order1"  />Other non veg</label>
           </fieldset>
 
           <!-- Todo => below input option is not visible, can give it a border to distinguish it from white space -->
-          <input  autoComplete="off" name="firstdish" id="firstdish" required>
+          <input class="border-2 border-black/40 p-2 mt-2 rounded"  autoComplete="off" name="firstdish" id="firstdish" required>
   
         </div>
 
-        <div class="form-group">
+        <div class="form-group p-2">
           <fieldset class="group2" onchange="set_input_option('order2','seconddish')">
             <label><input  name="order2"  type="radio"  value="veg"  class="order2" required/>Veg<label>
             <label><input name="order2"  type="radio"  value="chicken"  class="order2"  />Chicken</label>
             <label><input  name="order2"  type="radio"  value="other_non_veg"  class="order2"  />Other non veg</label>
           </fieldset>
-          <input  autoComplete="off" name="seconddish" id="seconddish" required>
+          <input class="border-2 border-black/40 p-2 mt-2 rounded"  autoComplete="off" name="seconddish" id="seconddish" required>
         </div>
 
-        <div class="form-group">
+        <div class="form-group p-2">
           <fieldset class="group3"  onchange="set_input_option('order3','thirddish')" >
             <label>  <input  name="order3"  type="radio"  value="veg"  class="order3"  required/>Veg</label>
             <label><input  name="order3"  type="radio"  value="chicken"  class="order3"  />Chicken</label>
             <label><input  name="order3"  type="radio"  value="other_non_veg"  class="order3"  />Other non veg</label>
           </fieldset>
-          <input autoComplete="off" name="thirddish" id="thirddish" required>
+          <input class="border-2 border-black/40 p-2 mt-2 rounded" autoComplete="off" name="thirddish" id="thirddish" required>
         </div> 
 
         <datalist id="veg">
@@ -207,7 +207,20 @@
           return value;
         } else {
         }
-      }      
+      } 
+      let fullname = document.getElementById('fullname')   
+      let password = document.getElementById('password')  
+      let email = document.getElementById('email')
+      function setName () {
+        localStorage.setItem('fullname',fullname.value)
+      }
+      function setPass(){
+        localStorage.setItem('password', password.value)
+      }
+      function setEmail(){
+        localStorage.setItem('email', email.value)
+      }
+
     </script>
   </body>
 </html>

@@ -109,52 +109,28 @@
       >
         <div class="w-full h-full lg:w-1/2 slideshow-container hidden sm:block">
           <div class="mySlides fade w-full h-full">
-            <img
-              src="/static/Image/fun_1.jpg"
-              class="h-full"
-            />
+            <img src="/static/Image/fun_1.jpg" class="h-full" />
           </div>
           <div class="mySlides fade w-full h-full">
-            <img
-              src="/static/Image/fun_2.jpg"
-              class="h-full"
-            />
+            <img src="/static/Image/fun_2.jpg" class="h-full" />
           </div>
           <div class="mySlides fade w-full h-full">
-            <img
-              src="/static/Image/fun_4.jpg"
-              class="h-full"
-            />
+            <img src="/static/Image/fun_4.jpg" class="h-full" />
           </div>
           <div class="mySlides fade w-full h-full">
-            <img
-              src="/static/Image/fun_5.jpg"
-              class="h-full"
-            />
+            <img src="/static/Image/fun_5.jpg" class="h-full" />
           </div>
           <div class="mySlides fade w-full h-full">
-            <img
-              src="/static/Image/fun_6.jpg"
-              class="h-full"
-            />
+            <img src="/static/Image/fun_6.jpg" class="h-full" />
           </div>
           <div class="mySlides fade w-full h-full">
-            <img
-              src="/static/Image/fun_7.jpg"
-              class="h-full"
-            />
+            <img src="/static/Image/fun_7.jpg" class="h-full" />
           </div>
           <div class="mySlides fade w-full h-full">
-            <img
-              src="/static/Image/fun_8.jpg"
-              class="h-full"
-            />
+            <img src="/static/Image/fun_8.jpg" class="h-full" />
           </div>
           <div class="mySlides fade w-full h-full">
-            <img
-              src="/static/Image/fun_9.jpg"
-              class="h-full"
-            />
+            <img src="/static/Image/fun_9.jpg" class="h-full" />
           </div>
         </div>
         <div>
@@ -227,7 +203,13 @@
         setTimeout(showSlides, 4000); // Change image every 2 seconds
       }
       showSlides();
-      console.log(localStorage.getItem('email'))
+      let email = document.getElementById('email');
+      let password = document.getElementById('password');
+      console.log(email.value);
+      if (localStorage.getItem('email') !== null) {
+        email.value = localStorage.getItem('email');
+        password.value = localStorage.getItem('password');
+      }
     </script>
   </body>
 </html>
