@@ -28,9 +28,9 @@
       $( function() {
         $( "#slider-range" ).slider({
           range: true,
-          min: 200,
-          max: 1000,
-          values: [ 300, 600 ],
+          min: 0,
+          max: 2000,
+          values: [ 100, 1900 ],
           slide: function( event, ui ) {
             $( "#amount" ).val( "₹" + ui.values[ 0 ] + " - ₹" + ui.values[ 1 ] );
           }
@@ -43,16 +43,10 @@
     
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
   </head>
-  <body>
+  <body class="p-4">
    
     <nav></nav>
     <div class="background"></div>
-    <div class="flex flex-col gap-8 p-[20px]">
-      <p>But first, please provide your budget
-      <label for="amount">Price range:</label>
-      <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-    </p>
-      <div id="slider-range"></div>
     
     <form action="/recommend_me_foods" method="POST" id="dish-form">
       <input type="text" >
@@ -65,30 +59,30 @@
 
     </form>
 
-      <h1 class="font-bold text-3xl text-white">
-        Based on your choices,our recommendations are : 
+      <h1 class="font-bold text-3xl text-black">
+        Based on your choices, our recommended dishes are : 
       </h1>
+      <h2 class="text-orange-500 font-semibold text-2xl lg:mt-4 ">Please select one of them to see our recommended restaurants</h2>
       
-      <div class="flex flex-col" id="container">
+      <div class="flex flex-col mt-8" id="container">
         
           <!-- setting the 3 showing structure -->
         {% set recom_length =recom|length %}
         
           {% for i in range(0,recom_length,3) %}
-            <div class="grid grid-cols-3 gap-4" id="sub-container">
+            <div class="flex flex-col rounded-2xl lg:flex-row bg-[#F7B83A]/30 justify-between lg:p-20 lg:px-40 gap-4" id="sub-container">
               {% if recom_length>i+3%}
                 {% for j in range(i+3) %}
-                  <div class="bg-green-500 w-[200px] h-[200px]" >
+                  <div class="bg-[#909090] w-[200px] h-[200px] flex items-center justify-center rounded-2xl shadow-xl" onclick="get_restaurant( `{{recom[j]}}` ) ">
                     
-                    <button onclick="get_restaurant( `{{recom[j]}}` ) ">Get Restaurant</button>
-                    {{recom[j]}}
+                    <!-- <button >Get Restaurant</button> -->
+                    <span class="text-2xl font-semibold text-white ">{{recom[j]}}</span>
                   </div>
                 {% endfor %}
               {% else %}
                 {% for j in range(i,recom_length) %}
-                  <div class="bg-green-500 w-[200px] h-[200px]" >
-                    <button onclick="get_restaurant(`{{recom[j]}}`) ">Get Restaurant</button>
-                    {{recom[j]}}
+                  <div class="bg-[#909090] w-[200px] h-[200px] flex items-center justify-center rounded-2xl shadow-xl" onclick="get_restaurant(`{{recom[j]}}`)">
+                    <span class="text-2xl font-semibold text-white ">{{recom[j]}}</span>
                   </div>
                 {% endfor %}
               {% endif %}
@@ -96,15 +90,29 @@
         {% endfor %}
       </div>
 
+      <div class="flex flex-col lg:flex-row gap-4 items-center p-[20px] w-full" >
+        <p class="w-full lg:w-1/2 text-xl ">But first, please provide your budget
+          <label for="amount">Price range:</label>
+          <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        </p>
+        <div id="slider-range" class=" w-full lg:w-2/5"></div>
+
      
       </div>
+      <div class="flex px-4 lg:pr-40 text-xl mt-4 flex-col lg:flex-row lg:gap-[20rem] justify-between">
+      <p class="bg-white text-center text-black p-2 rounded-2xl ">Please let us know your current location to find the best restaurants near you</p>
+      <button class="bg-green-500 rounded-xl text-white hover:text-green-500 hover:bg-white p-4 text-xl font-semibold " onclick="initGeolocation()">Give permission</button>
+    </div>
     </div>
     
 
     <div class="flex justify-between p-20">
       <button id="go-back"  class="p-4 bg-white text-black font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="GoBack()">  Go back  </button>
       <button  id="load-more"  class="p-4 bg-green-500 text-white font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="LoadMore()">  Load more  </button>
+      <!-- <button id="next" onclick=""></button> -->
     </div>
+
+    
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         all_sub_container=document.querySelectorAll('[id=sub-container]');
@@ -175,6 +183,7 @@
 
      function success(position)
      {
+      console.log(position.coords.longitude, position.coords.latitude)
          document.getElementById('longitude').value = position.coords.longitude;
          document.getElementById('latitude').value = position.coords.latitude
          
