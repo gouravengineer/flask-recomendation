@@ -6,6 +6,7 @@ from food_recommendation.recommendation import recommend_food,recommend_restaura
 from flask_bcrypt import Bcrypt
 bcrypt=Bcrypt()
 
+order_historical_data = [{"user_id":"Abhinav Kumar Verma","food_choice":"Chicken Biryani","food_type":"Chicken","rating":5},{"user_id":"Abhinav Kumar Verma","food_choice":"Mutton Biryani","food_type":"Other Non Veg","rating":5},{"user_id":"Abhinav Kumar Verma","food_choice":"Tandoori Chicken","food_type":"Chicken","rating":5},{"user_id":"Abhinav Kumar Verma","food_choice":"Butter Chicken","food_type":"Chicken","rating":5},{"user_id":"Abhinav Kumar Verma","food_choice":"Prawn Biryani","food_type":"Other Non Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"BUTTER CHICKEN","food_type":"Chicken","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"MOMO","food_type":"Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"Shahi Paneer ","food_type":"Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"Mushroom ","food_type":"Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"PANI PURI","food_type":"Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"Aloo Paratha ","food_type":"Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"Kadhi chawal","food_type":"Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"Butter chicken","food_type":"Chicken","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"Rajma","food_type":"Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"KULCHE","food_type":"Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"MUTTON CURRY","food_type":"Other Non Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"Baati","food_type":"Veg","rating":5}]
 
 @app.route("/about")
 def about():
@@ -15,7 +16,6 @@ def about():
 @app.route("/",methods=('GET', 'POST'))
 def home():
     if request.method == 'POST':
-        print("hello")
         course_type = request.form['course_type']
         food_type = request.form['food_type']
         dry_or_gravy = request.form['dry_or_gravy']
@@ -55,17 +55,15 @@ def login():
                 error = "Password not verified"
                 return render_template('login.html',error=error,record_id=record_id)
             else:
-                print(record_id=='None',type(record_id))
                 if record_id=='None':
                     return redirect(url_for('home'))
                 record = Records.query.filter_by(id=record_id).first()
                 record.user_id=email
                 db.session.commit()
                 record=record.to_dict()
-                orders=Orders.query.filter_by(user_id=email).all()
-                orders=[x.to_dict() for x in orders]
-                print(orders)
-                recom = recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders)
+                orders=Orders.query.all()
+                orders=[x.to_dict() for x in orders]+order_historical_data
+                recom = recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders,user_id=email)
                 return redirect(url_for('recommend_me_food', recom=json.dumps(recom),record_id=record_id))
                 # recommend_me_food(recom)
 
@@ -74,7 +72,6 @@ def login():
 
 @app.route("/signup",methods=('GET','POST'))
 def signup():
-    print(request.method)
     if request.method == 'POST':
         error=None
         fullname = request.form['fullname']
@@ -83,14 +80,13 @@ def signup():
         password = request.form['password']
         confirm_password = request.form['confirm_password']
         if password!=confirm_password:
-            error="Pssword you enter are not same."
+            error="Password you enter are not same."
             return render_template('signup.html',error=error,total_food=get_total_food())
         hashed_password=bcrypt.generate_password_hash(password).decode('utf-8')
         order_list=[['order1','firstdish'],['order2','seconddish'],['order2','thirddish']]
         with app.app_context():
             db.create_all()
             check = User.query.filter_by(email=email).all()
-            print(check)
             if len(check)!=0:
                 error="User already exists"
                 return render_template('signup.html',error=error,total_food=get_total_food())
@@ -104,8 +100,8 @@ def signup():
                 order= Orders(user_id=email,food_choice=food_choice,food_type=food_type,rating=5)
                 db.session.add(order)
                 db.session.commit()
-            orders=Orders.query.filter_by(user_id=email).all()
-            orders=[x.to_dict() for x in orders]
+            orders=Orders.query.all()
+            orders=[x.to_dict() for x in orders]+order_historical_data
             try:
                 record_id = request.form['record_id']
             except:
@@ -114,7 +110,7 @@ def signup():
             record.user_id=email
             db.session.commit()
             record=record.to_dict()
-        recom = recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders)
+        recom = recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders,user_id=email)
         return redirect(url_for('recommend_me_food', recom=json.dumps(recom),record_id=record_id))
     return render_template('signup.html',total_food=get_total_food())
 
