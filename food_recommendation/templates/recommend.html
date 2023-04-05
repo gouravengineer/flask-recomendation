@@ -89,6 +89,10 @@
             </div>
         {% endfor %}
       </div>
+      <div class="flex justify-between sm:px-20 sm:py-8">
+        <button id="go-back"  class="p-4 bg-white text-black font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="GoBack()">  Go back  </button>
+        <button  id="load-more"  class="p-4 bg-green-500 text-white font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="LoadMore()">  Load more  </button>
+      </div>
 
       <div class="flex flex-col lg:flex-row gap-4 items-center p-[20px] w-full" >
         <p class="w-full lg:w-1/2 text-xl ">But first, please provide your budget
@@ -99,19 +103,11 @@
 
      
       </div>
-      <div class="flex px-4 lg:pr-40 text-xl mt-4 flex-col lg:flex-row lg:gap-[20rem] justify-between">
+      <div class="flex px-4 lg:pr-40 text-xl mt-4 flex-col lg:flex-row lg:gap-[20rem] justify-between mb-8">
       <p class="bg-white text-center text-black p-2 rounded-2xl ">Please let us know your current location to find the best restaurants near you</p>
       <button class="bg-green-500 rounded-xl text-white hover:text-green-500 hover:bg-white p-4 text-xl font-semibold " onclick="initGeolocation()">Give permission</button>
     </div>
     </div>
-    
-
-    <div class="flex justify-between p-20">
-      <button id="go-back"  class="p-4 bg-white text-black font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="GoBack()">  Go back  </button>
-      <button  id="load-more"  class="p-4 bg-green-500 text-white font-semibold text-xl rounded-2xl hover:scale-[1.20]" onclick="LoadMore()">  Load more  </button>
-      <!-- <button id="next" onclick=""></button> -->
-    </div>
-
     
     <script>
       document.addEventListener("DOMContentLoaded", () => {
