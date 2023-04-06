@@ -103,9 +103,9 @@
   </head>
   <body>
     <div id="container-div" class="bg-black/50"></div>
-    <div class="w-full h-fit pb-8 my-auto lg:w-3/5 mx-auto p-4 pb-8 lg:p-16">
+    <div class="w-full pb-8 my-auto lg:w-3/5 mx-auto p-4 pb-8 lg:p-16">
       <div
-        class="flex flex-col h-full pb-8 lg:h-[450px] lg:flex-row items-center justify-center"
+        class="flex flex-col pb-8 lg:h-[450px] lg:flex-row items-center justify-center"
       >
         <div class="w-full h-full lg:w-1/2 slideshow-container hidden sm:block">
           <div class="mySlides fade w-full h-full">
@@ -144,7 +144,7 @@
           <span class="dot"></span>
         </div>
         <div
-          class="form-div h-full lg:w-1/2 w-full lg:h-[450px] mx-auto p-4 pb-0 bg-[#FFFFFF]/80 text-center"
+          class="form-div h-full lg:w-1/2 w-full mx-auto p-4 pb-0 bg-[#FFFFFF]/80 text-center"
         >
           <form
             action="/login"
@@ -181,11 +181,14 @@
           >
             <p>New User?</p>
             <input name="record_id" value="{{record_id}}" hidden />
+            <div class="flex pl-40 justify-between gap-4 text-center p-0">
             <input type="submit" value="Signup" class="btn-link" />
+            |
             <input
-              value="forgot password?"
-              class="btn-link w-full text-center mb-4"
+              value="Forgot password?"
+              class="btn-link"
             />
+          </div>
           </form>
         </div>
       </div>
