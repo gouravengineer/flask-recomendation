@@ -40,7 +40,7 @@ class Orders(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.now)
     food_choice = db.Column(db.String(120), nullable=False)
     food_type = db.Column(db.String(120), nullable=False)
-    rating = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Integer, nullable=True)
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
