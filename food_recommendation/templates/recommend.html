@@ -59,10 +59,10 @@
 
     </form>
 
-      <h1 class="font-bold text-3xl text-black">
+      <!-- <h1 class="font-bold text-3xl text-black">
         Based on your choices, our recommended dishes are : 
-      </h1>
-      <h2 class="text-orange-500 font-semibold text-2xl lg:mt-4 ">Please select one of them to see our recommended restaurants</h2>
+      </h1> -->
+      <h2 class="text-orange-500 font-semibold text-2xl lg:mt-4 ">Based on your choices, our recommended dishes are : </h2>
       
       <div class="flex flex-col mt-8" id="container">
         
@@ -126,10 +126,13 @@
         let max = $( "#slider-range" ).slider( "values", 1 )
         document.getElementById('max').setAttribute("value",max)
         document.getElementById('min').setAttribute("value",min)
-        document.getElementById('latitude').setAttribute("value",9.8888)
-        document.getElementById('longitude').setAttribute("value",7.66)
         initGeolocation()
-        document.getElementById("dish-form").submit();
+        var latitude = document.getElementById("latitude");
+        var longitude = document.getElementById("longitude");
+        if (latitude && latitude.value && longitude.value && longitude) {
+          document.getElementById("dish-form").submit();
+        }
+        
         
       }
       let load_more_button = document.getElementById('load-more');
@@ -185,9 +188,22 @@
          
      }
 
-     function fail()
+     function fail(error)
      {
-        alert("Please allow Brouser for location ")
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.")
+          break;
+        case error.POSITION_UNAVAILABLE:
+          alert("Location information is unavailable.")
+          break;
+        case error.TIMEOUT:
+          alert("The request to get user location timed out.")
+          break;
+        case error.UNKNOWN_ERROR:
+          alert("Enable us to access your location to get near by restaurant ")
+          break;
+      }
      }
 
     //  initGeolocation();

@@ -86,9 +86,16 @@
       <input name="record_id" value="{{record_id}}" hidden />
     </form>
     <div class="flex flex-col gap-8 p-[20px]">
-      <p class="text-3xl font-semibold text-center mt-6">
-        Hey! Here are our best restaurants tailor-made for you :
-      </p>
+        <div class="text-center flex">
+          <div class="lg:w-1/5">
+            <p class="text-left text-3xl font-semibold text-orange-500">FlickO</p>
+          </div>
+          <div class="lg:w-4/5">
+            <p class="text-left text-3xl font-semibold ml-8 text-orange-500">
+              Hey! Here are our best restaurants tailor-made for you :
+            </p>
+          </div>
+        </div>
       <div class="flex flex-col items-center lg:items-stretch" id="container">
         <!-- setting the 3 showing structure -->
         {% set recom_length =recom_rest|length %} {% for i in
