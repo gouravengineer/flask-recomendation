@@ -153,6 +153,8 @@ def recommend_me_restaurant():
         record.suggested_restaurant=suggested_restaurant
         if rating_of_food:
             record.rating_of_food=int(rating_of_food)
+        else:
+            record.rating_of_food=1
         if restaurant_rating:
             record.restaurant_rating=int(restaurant_rating)
         db.session.commit()
