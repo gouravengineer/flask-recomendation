@@ -103,9 +103,9 @@
   </head>
   <body>
     <div id="container-div" class="bg-black/50"></div>
-    <div class="w-full lg:w-3/5 mx-auto p-4 lg:p-16">
+    <div class="w-full h-fit pb-8 my-auto lg:w-3/5 mx-auto p-4 pb-8 lg:p-16">
       <div
-        class="flex flex-col h-[400px] lg:h-[450px] lg:flex-row items-center justify-center"
+        class="flex flex-col h-full pb-8 lg:h-[450px] lg:flex-row items-center justify-center"
       >
         <div class="w-full h-full lg:w-1/2 slideshow-container hidden sm:block">
           <div class="mySlides fade w-full h-full">
@@ -144,7 +144,7 @@
           <span class="dot"></span>
         </div>
         <div
-          class="form-div h-full lg:w-1/2 w-full h-[300px] lg:h-[450px] mx-auto p-4 pb-0 bg-[#FFFFFF]/80 text-center"
+          class="form-div h-full lg:w-1/2 w-full lg:h-[450px] mx-auto p-4 pb-0 bg-[#FFFFFF]/80 text-center"
         >
           <form
             action="/login"
@@ -153,7 +153,7 @@
             class=""
           >
             {% if error %}
-            <p class="font-bold">{{ error }}</p>
+            <p class="font-bold text-red-500">{{ error }}</p>
             {% endif %}
             <p class="font-bold text-2xl mb-8">Login</p>
             <div class="form-group">
@@ -174,10 +174,18 @@
               id="submit-btn"
             />
           </form>
-          <form method="POST" action="/render_signup" class="text-center mt-8">
+          <form
+            method="POST"
+            action="/render_signup"
+            class="text-center mt-8 flex flex-col gap-2 items-center justify-center"
+          >
             <p>New User?</p>
             <input name="record_id" value="{{record_id}}" hidden />
             <input type="submit" value="Signup" class="btn-link" />
+            <input
+              value="forgot password?"
+              class="btn-link w-full text-center mb-4"
+            />
           </form>
         </div>
       </div>
