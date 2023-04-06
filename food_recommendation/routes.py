@@ -6,8 +6,6 @@ from food_recommendation.recommendation import recommend_food,recommend_restaura
 from flask_bcrypt import Bcrypt
 bcrypt=Bcrypt()
 
-order_historical_data = [{"user_id":"Abhinav Kumar Verma","food_choice":"Chicken Biryani","food_type":"Chicken","rating":5},{"user_id":"Abhinav Kumar Verma","food_choice":"Mutton Biryani","food_type":"Other Non Veg","rating":5},{"user_id":"Abhinav Kumar Verma","food_choice":"Tandoori Chicken","food_type":"Chicken","rating":5},{"user_id":"Abhinav Kumar Verma","food_choice":"Butter Chicken","food_type":"Chicken","rating":5},{"user_id":"Abhinav Kumar Verma","food_choice":"Prawn Biryani","food_type":"Other Non Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"BUTTER CHICKEN","food_type":"Chicken","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"MOMO","food_type":"Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"Shahi Paneer ","food_type":"Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"Mushroom ","food_type":"Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"PANI PURI","food_type":"Veg","rating":5},{"user_id":"Abhishek Bhattacherjee ","food_choice":"Aloo Paratha ","food_type":"Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"Kadhi chawal","food_type":"Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"Butter chicken","food_type":"Chicken","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"Rajma","food_type":"Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"KULCHE","food_type":"Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"MUTTON CURRY","food_type":"Other Non Veg","rating":5},{"user_id":"Abhishek Sharma ","food_choice":"Baati","food_type":"Veg","rating":5}]
-
 @app.route("/about")
 def about():
     return render_template('about_us.html')
@@ -62,10 +60,9 @@ def login():
                 db.session.commit()
                 record=record.to_dict()
                 orders=Orders.query.all()
-                orders=[x.to_dict() for x in orders]+order_historical_data
+                orders=[x.to_dict() for x in orders]
                 recom = recommend_food(record['course_type'],record['food_type'],record['dry_or_gravy'],orders,user_id=email)
                 return redirect(url_for('recommend_me_food', recom=json.dumps(recom),record_id=record_id))
-                # recommend_me_food(recom)
 
             
     return render_template('login.html',record_id=record_id)
@@ -101,7 +98,7 @@ def signup():
                 db.session.add(order)
                 db.session.commit()
             orders=Orders.query.all()
-            orders=[x.to_dict() for x in orders]+order_historical_data
+            orders=[x.to_dict() for x in orders]
             try:
                 record_id = request.form['record_id']
             except:
@@ -131,8 +128,8 @@ def recommend_me_food():
     if request.method == 'POST':
         max_amount = request.form['max']
         min_amount = request.form['min']
-        latitude =request.form['latitude']
-        longitude = request.form['longitude']
+        latitude = float(request.form['latitude'])
+        longitude = float(request.form['longitude'])
         suggested_food = request.form['dish']
         record_id = request.form['record_id']
         record = Records.query.filter_by(id=record_id).first()
@@ -150,10 +147,22 @@ def recommend_me_restaurant():
     if request.method == 'POST':
         suggested_restaurant = request.form['suggested_restaurant']
         record_id = request.form['record_id']
+        restaurant_rating = request.form['restaurant_rating']
+        rating_of_food = request.form['rating_of_food']
         record = Records.query.filter_by(id=record_id).first()
         record.suggested_restaurant=suggested_restaurant
+        if rating_of_food:
+            record.rating_of_food=int(rating_of_food)
+        if restaurant_rating:
+            record.restaurant_rating=int(restaurant_rating)
         db.session.commit()
-        return [suggested_restaurant,record.to_dict()]
+        record=record.to_dict()
+        order= Orders(user_id=record['user_id'],food_choice=record['suggested_food'],food_type=record['food_type'],rating=record['rating_of_food'])
+        db.session.add(order)
+        db.session.commit()
+        return redirect(url_for('home'))
+        
+        
     recom_rest=request.args.get('recom_rest')
     record_id=request.args.get('record_id')
     recom_rest=json.loads(recom_rest)
