@@ -173,7 +173,7 @@
             {% endfor %}
         </datalist>
         
-        <input name="record_id" value="{{record_id}}" hidden />
+        <input name="record_id" form="myform" value="{{record_id}}" hidden />
 
         <!-- <input
           type="submit"
@@ -195,7 +195,12 @@
       const set_input_option = (option, input_id) => {
         value=getRadioValue(option)
         const selectElement = document.getElementById(`${input_id}`);
-        selectElement.setAttribute('list',value)
+        if (value=="Other Non Veg"){
+          selectElement.setAttribute('list',"other_non_veg")
+        }
+        else{
+          selectElement.setAttribute('list',value)
+        }
       };
       function getRadioValue(option) {
         var selectedOption = document.querySelector(
