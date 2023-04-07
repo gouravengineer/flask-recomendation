@@ -231,7 +231,7 @@ PANEER PASANA,Main Course,Veg,Gravy
 ALOO MATAR,Main Course,Veg,Gravy
 ALOO JEERA,Main Course,Veg,Dry
 VEG BIRYANI,Main Course,Veg,Dry
-RICE,Main Course,Veg,Dry
+RICE BOWL,Main Course,Veg,Dry
 KADAI MUSHROOM,Main Course,Veg,Gravy
 LAUKI KOFTA,Main Course,Veg,Gravy
 METHI MALAI MATAR,Main Course,Veg,Gravy
@@ -279,10 +279,10 @@ NOODLES,Starter,Veg,Dry
 NOODLES,Snacks,Veg,Dry
 GOBI CHILLI,Snacks,Veg,Dry
 PANEER PEPPER,Snacks,Veg,Dry
-CHOLE BATHURE,Snacks,Veg,Gravy
+CHOLE BHATURE,Snacks,Veg,Gravy
 ROLL,Snacks,Veg,Dry
 SAMOSA,Snacks,Veg,Dry
-KULCHE/KULCHA,Snacks,Veg,Dry
+KULCHE,Snacks,Veg,Dry
 PANI PURI,Snacks,Veg,Gravy
 GOLGAPPE,Snacks,Veg,Gravy
 PHUCHKA,Snacks,Veg,Gravy
@@ -342,7 +342,7 @@ EGG ROAST,Snacks,Other Non Veg,Dry
 CHICKEN ROGAN JOSH,Main Course,Chicken,Gravy
 VEG KORMA,Main Course,Veg,Dry
 PANEER KORMA,Main Course,Veg,Dry
-MIXED VEG CURRY,Main Course,Other Non Veg,Dry
+MIXED VEG CURRY,Main Course,Veg,Dry
 KADAI MUTTON,Main Course,Other Non Veg,Gravy
 CHOW CHOW BATH,Snacks,Veg,Dry
 GOLDEN FRIED PRAWN ,Starter,Other Non Veg,Dry
@@ -381,7 +381,7 @@ POTHU FRY,Snacks,Other Non Veg,Dry
 MUTTON KALI MIRCH,Starter,Other Non Veg,Dry
 ALOO FRY,Main Course,Veg,Dry
 PUNJABI CHICKEN,Main Course,Chicken,Gravy
-X PEPPER DRY,Starter,Other Non Veg,Dry
+PRAWN PEPPER DRY,Starter,Other Non Veg,Dry
 GOBI PEPPER DRY,Starter,Other Non Veg,Dry
 BOTI PEPPER DRY,Starter,Other Non Veg,Dry
 PUNJABI PANEER,Main Course,Veg,Gravy
@@ -419,3 +419,35 @@ GOBI PEPPER DRY,Snacks,Other Non Veg,Dry
 BOTI PEPPER DRY,Snacks,Other Non Veg,Dry
 MATHI RAVA FRY,Snacks,Other Non Veg,Dry
 PRAWN PEPPER DRY,Snacks,Other Non Veg,Dry
+DUMPLING,Snacks,Veg,Dry
+DUMPLING,Snacks,Chicken,Dry
+DUMPLING,Snacks,Other Non Veg,Dry
+TACO,Snacks,Veg,Dry
+TACO,Snacks,Chicken,Dry
+TACO,Snacks,Other Non Veg,Dry
+RARA CHICKEN,Main Course,Chicken,Gravy
+AFGHANI CHICKEN,Starter,Chicken,Dry
+AFGHANI CHICKEN,Snacks,Chicken,Dry
+CHICKEN CHOWMEIN,Snacks,Chicken,Dry
+CHICKEN CHANGEZI,Main Course,Chicken,Gravy
+SUSHI,Snacks,Chicken,Dry
+SUSHI,Snacks,Veg,Dry
+SUSHI,Snacks,Other Non Veg,Dry
+SUSHI,Starter,Chicken,Dry
+SUSHI,Starter,Veg,Dry
+SUSHI,Starter,Other Non Veg,Dry
+MAGGI,Snacks,Veg,Dry
+PORK CHILLI,Snacks,Other Non Veg,Dry
+PORK CHILLI,Starter,Other Non Veg,Dry
+LASAGNA,Snacks,Veg,Gravy
+LASAGNA,Snacks,Chicken,Gravy
+LASAGNA,Snacks,Other Non Veg,Gravy
+HONEY CHILLI POTATO,Starter,Veg,Dry
+KAJU CURRY,Main Course,Veg,Gravy
+DAHI PURI,Snacks,Veg,Gravy
+THAI CURRY,Main Course,Veg,Gravy
+BEEF FRY,Starter,Other Non Veg,Dry
+PEPPER BEEF,Starter,Other Non Veg,Dry
+BEEF MASALA,Main Course,Other Non Veg,Gravy
+BEEF FRY,Snacks,Other Non Veg,Dry
+PEPPER BEEF,Snacks,Other Non Veg,Dry
