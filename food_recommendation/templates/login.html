@@ -103,11 +103,13 @@
   </head>
   <body>
     <div id="container-div" class="bg-black/50"></div>
-    <div class="w-full pb-8 my-auto lg:w-3/5 mx-auto p-4 pb-8 lg:p-16">
+    <div
+      class="w-full pb-8 flex items-center h-full lg:w-[70%] mx-auto gap-0 p-4 pb-8 lg:p-10"
+    >
       <div
-        class="flex flex-col pb-8 lg:h-[450px] lg:flex-row items-center justify-center"
+        class="flex flex-col w-full pb-8 lg:h-[600px] lg:flex-row items-center justify-center"
       >
-        <div class="w-full h-full lg:w-1/2 slideshow-container hidden sm:block">
+        <div class="w-full h-full lg:w-1/2 slideshow-container hidden lg:block">
           <div class="mySlides fade w-full h-full">
             <img src="/static/Image/fun_1.jpg" class="h-full" />
           </div>
@@ -181,14 +183,8 @@
           >
             <p>New User?</p>
             <input name="record_id" value="{{record_id}}" hidden />
-            <div class="flex pl-40 justify-between gap-4 text-center p-0">
             <input type="submit" value="Signup" class="btn-link" />
-            |
-            <input
-              value="Forgot password?"
-              class="btn-link"
-            />
-          </div>
+            <span class="btn-link w-full mx-auto">Forgot password?</span>
           </form>
         </div>
       </div>
