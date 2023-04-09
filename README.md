@@ -6,12 +6,12 @@
 
 3. pip install -r requirements.txt
 
-          or 
+         or
 
    you can activate virtual environment by running this command "source venv/bin/activate" for bash terminal
 
 4. python3 run.py
 
-  or 
+          or 
 
-   gunicorn run:app
+  gunicorn run:app
