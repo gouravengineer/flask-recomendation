@@ -1,16 +1,16 @@
 # flask-recomendation
 
-open terminal 
+1. open terminal 
 
-go inside flask-recomendation folder by run "cd flask-recomendation"
+2. go inside flask-recomendation folder by run "cd flask-recomendation"
 
-pip install -r requirements.txt
+3. pip install -r requirements.txt
 
 or 
 
 you can activate virtual environment by running this command "source venv/bin/activate" for bash terminal
 
-python3 run.py
+4. python3 run.py
 
 or 
 
